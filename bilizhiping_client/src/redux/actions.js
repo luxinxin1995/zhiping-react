@@ -1,0 +1,1 @@
+// 包含n个action creater，异步action，同步action
