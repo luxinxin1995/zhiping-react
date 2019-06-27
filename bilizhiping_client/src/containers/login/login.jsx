@@ -11,7 +11,6 @@ class Login extends Component {
         password: ''
     }
     login() {
-        // console.log(this.state)
         this.props.login(this.state)
     }
     toRegister() {
@@ -49,9 +48,6 @@ class Login extends Component {
     }
 }
 export default connect(
-
     state => state.user,
-
     { login }
-
 )(Login)

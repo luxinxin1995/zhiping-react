@@ -29,7 +29,7 @@ class Register extends Component {
     }
     render() {
         const {type} = this.state
-        const { redirectTo, msg } = this.props
+        const { redirectTo, msg } = this.props.user
         if (redirectTo) {
             return <Redirect to={redirectTo} />
         }
@@ -38,8 +38,8 @@ class Register extends Component {
                 <NavBar>哔&nbsp;哩&nbsp;直&nbsp;聘</NavBar>
                 <Logo />
                 <WingBlank>
+                    {msg ? <p className='error-msg'>{msg}</p> : null}
                     <List>
-                        {msg ? <p className='error-msg'>{msg}</p> : null}
                         <WhiteSpace />
                         <InputItem placeholder="请输入用户名" onChange={val => this.handleChange('username', val)}>用户名：</InputItem>
                         <WhiteSpace />
@@ -55,7 +55,7 @@ class Register extends Component {
                         <WhiteSpace />
                         <Button type="primary" onClick={this.register.bind(this)}>注&nbsp;&nbsp;&nbsp;册</Button>
                         <WhiteSpace />
-                        <Button onClick={this.toLogin.bind(this)}>已有账户？</Button>
+                        <Button className={msg?'margin_bottom':''} onClick={this.toLogin.bind(this)}>已有账户？</Button>
                     </List>
                 </WingBlank>
             </div>
