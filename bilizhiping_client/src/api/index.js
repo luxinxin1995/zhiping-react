@@ -5,3 +5,5 @@ export const reqRegister = (user) => ajax('/register',user,'POST')
 export const reqLogin = (user) => ajax('/login',user,'POST')
 // 更新用户
 export const reqUpdateUser = (user) => ajax('/update',user,'POST')
+// 获取用户信息
+export const reqGetUser = () => ajax('/user')

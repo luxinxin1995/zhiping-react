@@ -104,4 +104,17 @@ router.post('/update', function (req, res) {
     }
   })
 })
+
+router.get('/user', function (req, res) {
+  // 从cookie中获取userid
+  const userid = req.cookies.userid;
+  if (!userid) {
+    return res.send({ code: 1, msg: '请先登陆' })
+  }
+  //	查询对应的 user
+  UserModel.findOne({ _id: userid }, filter, function (err, user) {
+    return res.send({ code: 0, data: user })
+  })
+})
+
 module.exports = router;
