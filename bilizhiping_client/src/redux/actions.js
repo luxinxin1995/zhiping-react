@@ -59,6 +59,11 @@ export const login = ({ username, password }) => {
 
 // 更新用户信息
 export const updateUser = (user) => {
+    for(var key in user){
+        if(!user[key]) {
+            return resetUser('请完善个人信息！')
+        }
+      }
     return async dispatch => {
         const response = await reqUpdateUser(user)
         const result = response.data

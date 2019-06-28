@@ -27,7 +27,7 @@ class BossInfo extends Component {
         this.props.updateUser(this.state)
     }
     render() {
-        const {header,type} = this.props.user
+        const {header,type,msg} = this.props.user
         if (header) {
             const path = type === 'dashen'?'/dashen':'/boss'
             return <Redirect to={path}></Redirect>
@@ -36,6 +36,7 @@ class BossInfo extends Component {
             <div>
                 <NavBar>BOSS信息完善</NavBar>
                 <HeaderSelect setHeader={this.setHeader}/>
+                {msg ? <p className='error-msg'>{msg}</p> : null}
                 <InputItem placeholder="请输入招聘职位" onChange={val => this.handleChange('post', val)}>招聘职位：</InputItem>
                 <InputItem placeholder="请输入公司名称" onChange={val => this.handleChange('company', val)}>公司名称：</InputItem>
                 <InputItem placeholder="请输入职位薪资" onChange={val => this.handleChange('salary', val)}>职位薪资：</InputItem>
