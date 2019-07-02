@@ -57,3 +57,32 @@ const userSchema = mongoose.Schema({
 })
 const UserModel = mongoose.model('user',userSchema)
 exports.UserModel = UserModel
+
+// 定义chats集合的文档结构
+const chatSchema = mongoose.Schema({
+    from:{
+        type:String,//发送用户id
+        require:true
+    },
+    to:{
+        type:String,//接收用户的id
+        require:true
+    },
+    chat_id:{
+        type:String,//from和to组成的字符串
+        require:true
+    },
+    content:{
+        type:String,//内容
+        require:true
+    },
+    read:{
+        type:Boolean,//标识是否已读
+        defalut:false
+    },
+    create_time:{
+        type:Number//创建时间
+    }
+})
+const ChatModel = mongoose.model('chat',chatSchema)
+exports.ChatModel = ChatModel

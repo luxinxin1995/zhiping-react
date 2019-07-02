@@ -7,7 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('bilizhiping-server:server');
 var http = require('http');
-
 /**
  * Get port from environment and store in Express.
  */
@@ -20,6 +19,8 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+// start up sochetio server
+require('../socketIO/socketIO_server')(server)
 
 /**
  * Listen on provided port, on all network interfaces.

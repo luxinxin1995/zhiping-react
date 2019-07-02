@@ -1,6 +1,6 @@
 // 包含n个reducer函数：根据旧的state和指定的action返回一个新的state
 import { combineReducers } from 'redux';
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER } from "./action-types";
+import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER,RECEIVE_USER_LIST } from "./action-types";
 import { getRedirectTo } from "../utils/index";
 const initUser = {
     header: '',
@@ -9,6 +9,7 @@ const initUser = {
     msg: '',//错误提示信息
     redirectTo: '' // 需要自动跳转的路由 path
 }
+const initUserList = []
 function user(state = initUser, action) {
     switch (action.type) {
         case AUTH_SUCCESS: //data是user
@@ -24,9 +25,17 @@ function user(state = initUser, action) {
             return state;
     }
 }
+function userList(state = initUserList,action) {
+    switch (action.type) {
+        case RECEIVE_USER_LIST:
+            return action.data
+        default:
+            return state;
+    }
+}
 // 向外暴露的状态结构
 export default combineReducers({
-    user
+    user,userList
 })
 
 

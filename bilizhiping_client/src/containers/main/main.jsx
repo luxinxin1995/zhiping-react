@@ -10,6 +10,7 @@ import Boss from '../boss/boss'
 import Personal from '../personal/personal'
 import Message from '../message/message'
 import NavFooter from '../../components/nav-footer/nav-footer'
+import Chat from '../chat/chat'
 import { getRedirectTo } from '../../utils/index'
 import { getUser } from "../../redux/actions";
 import { NavBar } from "antd-mobile";
@@ -97,6 +98,7 @@ class Main extends Component {
                     }
                     <Route path="/bossInfo" component={BossInfo}></Route>
                     <Route path="/dashenInfo" component={DaShenInfo}></Route>
+                    <Route path="/chat/:userid" component={Chat}></Route>
                     <Route component={NotFound}></Route>
                 </Switch>
                 {currentNav ? <NavFooter navList={navList} /> : null}
