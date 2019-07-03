@@ -119,23 +119,23 @@ router.get('/user', function (req, res) {
 })
 
 // 根据用户类型获取用户列表
-router.get('/list',function (req,res) {
-  const {type} = req.query
-  UserModel.find({type},function (err,users) {
+router.get('/list', function (req, res) {
+  const { type } = req.query
+  UserModel.find({ type }, function (err, users) {
     res.send({
-      code:0,
-      data:users,
-      msg:'获取用户列表成功！'
+      code: 0,
+      data: users,
+      msg: '获取用户列表成功！'
     })
   })
 })
 
 // 获取当前用户所有相关聊天信息列表
-router.get('/msglist',function (req,res) {
+router.get('/msglist', function (req, res) {
   // 获取cookie中的userid
   const userid = req.cookies.userid
   // 查询得到所有user文档数组
-  UserModel.find(function (err,userDocs) {
+  UserModel.find(function (err, userDocs) {
     // 用对象存储所有的user信息：
     /**
      * {
@@ -147,33 +147,33 @@ router.get('/msglist',function (req,res) {
     // userDocs.forEach(doc => {
     //   users[doc_id] = {username:doc.username,header:doc.header}
     // })
-    const users = userDocs.reduce((users,user) => {
+    const users = userDocs.reduce((users, user) => {
       users[user._id] = {
-        username:user.username,
-        header:user.header
+        username: user.username,
+        header: user.header
       }
       return users
-    },{})
-  })
-  // 查询userid相关的所有聊天信息
-  /**
-   * 参数1：查询条件
-   * 参数2：过滤条件
-   * 参数3：回调函数
-   */
-  ChatModel.find({'$or':[{from:userid},{to:userid}]},filter,function (err,chatMsgs) {
-    res.send({
-      code:0,
-      data:{
-        users,
-        chatMsgs
-      },
-      msg:'获取聊天记录成功！'
+    }, {})
+    // 查询userid相关的所有聊天信息
+    /**
+     * 参数1：查询条件
+     * 参数2：过滤条件
+     * 参数3：回调函数
+     */
+    ChatModel.find({ '$or': [{ from: userid }, { to: userid }] }, filter, function (err, chatMsgs) {
+      res.send({
+        code: 0,
+        data: {
+          users,
+          chatMsgs
+        },
+        msg: '获取聊天记录成功！'
+      })
     })
   })
 })
 // 修改指定消息为已读
-router.post('/readmsg',function (req,res) {
+router.post('/readmsg', function (req, res) {
   const from = req.body.from
   const to = req.cookies.userid
   /**
@@ -183,11 +183,11 @@ router.post('/readmsg',function (req,res) {
    * 参数3：是否一次更新多条，默认只有一条
    * 参数4：更新完成的回调函数
    */
-  ChatModel.update({from,to,read:false},{read:true},{multi:true},function (err,doc) {
+  ChatModel.update({ from, to, read: false }, { read: true }, { multi: true }, function (err, doc) {
     res.send({
-      code:0,
-      data:doc.nModified,
-      msg:'消息已读成功！'
+      code: 0,
+      data: doc.nModified,
+      msg: '消息已读成功！'
     })
   })
 })

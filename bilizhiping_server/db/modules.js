@@ -78,7 +78,7 @@ const chatSchema = mongoose.Schema({
     },
     read:{
         type:Boolean,//标识是否已读
-        defalut:false
+        default:false
     },
     create_time:{
         type:Number//创建时间

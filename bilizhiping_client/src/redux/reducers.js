@@ -1,6 +1,6 @@
 // 包含n个reducer函数：根据旧的state和指定的action返回一个新的state
 import { combineReducers } from 'redux';
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER,RECEIVE_USER_LIST } from "./action-types";
+import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST, RECEIVE_MSG_LIST, RECEIVE_MSG } from "./action-types";
 import { getRedirectTo } from "../utils/index";
 const initUser = {
     header: '',
@@ -25,7 +25,7 @@ function user(state = initUser, action) {
             return state;
     }
 }
-function userList(state = initUserList,action) {
+function userList(state = initUserList, action) {
     switch (action.type) {
         case RECEIVE_USER_LIST:
             return action.data
@@ -33,9 +33,35 @@ function userList(state = initUserList,action) {
             return state;
     }
 }
+// 产生聊天状态的reducer
+const initChat = {
+    users: {},//所有用户信息的对象，属性名userid，属性值：{username，header}
+    chatMsgs: [],//当前用户所有相关msg数组
+    unReadCount: 0//总未读msg数量
+}
+function chat(state = initChat, action) {
+    switch (action.type) {
+        case RECEIVE_MSG_LIST:
+            const {users,chatMsgs} = action.data
+            return {
+                users,
+                chatMsgs,
+                unReadCount:0
+            }
+        case RECEIVE_MSG:
+            const chatMsg = action.data
+            return {
+                users:state.users,
+                chatMsgs:[...state.chatMsgs,chatMsg],
+                unReadCount:0
+            }
+        default:
+            return state;
+    }
+}
 // 向外暴露的状态结构
 export default combineReducers({
-    user,userList
+    user, userList, chat
 })
 
 

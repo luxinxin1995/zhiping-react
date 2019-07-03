@@ -9,3 +9,7 @@ export const reqUpdateUser = (user) => ajax('/update',user,'POST')
 export const reqGetUser = () => ajax('/user')
 // 根据用户类型获取用户列表
 export const reqUsersByType = (type) => ajax('/list',{type})
+// 获取消息列表
+export const reqChatMsgList = () => ajax('/msglist')
+// 修改消息为已读
+export const reqReadMsg = (from) => ajax('/readmsg',{from},'POST')
