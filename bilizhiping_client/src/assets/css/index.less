@@ -32,7 +32,16 @@
     top: 0;
     width: 100%;
 }
-
+#chat-page .am-navbar{
+    /*固定在顶部*/
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+#chat-page .am-list{
+    padding: 45px 0;
+}
 /*消息文本居右*/
 #chat-page .chat-me .am-list-extra {
     flex-basis: auto;
@@ -60,4 +69,7 @@
     margin-right: 10px;
     padding: 1px 0;
     display: inline-block;
+}
+.am-badge{
+    z-index: 1;
 }

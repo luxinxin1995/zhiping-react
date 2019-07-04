@@ -9,10 +9,16 @@ class Chat extends Component {
         content: '',
         isShow: false//是否显示表情列表
     }
-    componentDidMount() {
-        this.emojis = ['😀', '😁', '😍', '😘', '😪','😀', '😁', '😍', '😘', '😪','😀', '😁', '😍', '😘', '😪','😀', '😁', '😍', '😘', '😪','😀', '😁', '😍', '😘', '😪','😀', '😁', '😍', '😘', '😪','😀', '😁', '😍', '😘', '😪','😀', '😁', '😍', '😘', '😪','😀', '😁', '😍', '😘', '😪','😀', '😁', '😍', '😘', '😪']
+    componentWillMount() {
+        this.emojis = ['😀', '😁', '😍', '😘', '😪', '😀', '😁', '😍', '😘', '😪', '😀', '😁', '😍', '😘', '😪', '😀', '😁', '😍', '😘', '😪', '😀', '😁', '😍', '😘', '😪', '😀', '😁', '😍', '😘', '😪', '😀', '😁', '😍', '😘', '😪', '😀', '😁', '😍', '😘', '😪', '😀', '😁', '😍', '😘', '😪', '😀', '😁', '😍', '😘', '😪']
         this.emojis = this.emojis.map(value => ({ text: value }))
-
+    }
+    // 滑动到页面底部
+    componentDidMount(){
+        window.scrollTo(0,document.body.scrollHeight)
+    }
+    componentDidUpdate(){
+        window.scrollTo(0,document.body.scrollHeight)
     }
     handleSend = () => {
         // 收集数据
@@ -27,7 +33,8 @@ class Chat extends Component {
         }
         // 清除输入数据
         this.setState({
-            content: ''
+            content: '',
+            isShow: false
         })
     }
     sendEmojo = () => {
@@ -77,32 +84,26 @@ class Chat extends Component {
                 </List>
                 <div className='am-tab-bar'>
                     <InputItem value={this.state.content} placeholder="请输入" onChange={val => this.setState({ content: val })} extra={
-                        // <span>
-                        //     <span onClick={this.sendEmojo}>🙂</span>
-                        //     <span onClick={this.handleSend}>发送</span>
-                        // </span>
                         <span>
-
-                            <span className="emojo" onClick={this.sendEmojo}>🙂</span> <span onClick={this.handleSend}>发送</span>
-
+                            <span className="emojo" onClick={this.sendEmojo}>🙂</span>
+                            <span onClick={this.handleSend}>发送</span>
                         </span>
-                        
                     }
                     />
+                    {
+                        this.state.isShow ? (
+                            <Grid
+                                data={this.emojis}
+                                columnNum={8}
+                                carouselMaxRow={4}
+                                isCarousel={true}
+                                onClick={(item) => {
+                                    this.setState({ content: this.state.content + item.text })
+                                }}
+                            />
+                        ) : null
+                    }
                 </div>
-                {
-                    this.state.isShow ? (
-                        <Grid
-                            data={this.emojis}
-                            columnNum={8}
-                            carouselMaxRow={4}
-                            isCarousel={true}
-                            onClick={(item) => {
-                                this.setState({ content: this.state.content + item.text })
-                            }}
-                        />
-                    ) : null
-                }
             </div>
         )
     }
