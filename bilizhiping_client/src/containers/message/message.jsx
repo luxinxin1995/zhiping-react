@@ -4,7 +4,7 @@ import { List, Badge } from 'antd-mobile'
 const Item = List.Item
 const Brief = Item.Brief
 // 对chatMsgs按chat_id进行分组，并得到每个组的lastMsg组成的数组
-/**
+/*
  * 1.找出每个聊天的lastMsg，并用一个对象容器来保存{chat_id,lastMsg}
  * 2.得到所有lastMsg的数组
  * 3.对数组进行排序（按create_time降序）

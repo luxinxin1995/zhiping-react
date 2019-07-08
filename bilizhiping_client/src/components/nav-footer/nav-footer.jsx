@@ -7,20 +7,22 @@ const Item = TabBar.Item
 // withRouter：在非路由组件中使用路由库的api
 class NavFooter extends Component {
     static propTypes = {
-        navList: PropTypes.array.isRequired
+        navList: PropTypes.array.isRequired,
+        unReadCount: PropTypes.number.isRequired
     }
     render() {
         // nav.hide = true/false hide 代表当前项应该被隐藏
-        let {navList} = this.props
+        let { navList,unReadCount } = this.props
         navList = navList.filter(nav => !nav.hide) // 回调函数返回值为 true, 当前元素就会留下, 否则不留
         //	当前请求的路径
-        const {pathname} = this.props.location
+        const { pathname } = this.props.location
         return (
             <TabBar>
                 {
                     navList.map((nav) => (
                         <Item
                             key={nav.path}
+                            badge={nav.path === '/message' ? unReadCount : 0}
                             title={nav.text}
                             icon={{ uri: require(`./images/${nav.icon}.png`) }}
                             selectedIcon={{ uri: require(`./images/${nav.icon}-selected.png`) }}

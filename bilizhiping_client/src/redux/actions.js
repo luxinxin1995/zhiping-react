@@ -1,5 +1,5 @@
 import { reqRegister, reqLogin, reqUpdateUser, reqGetUser, reqUsersByType,reqChatMsgList,reqReadMsg } from '../api/index'
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST,RECEIVE_MSG_LIST,RECEIVE_MSG } from "./action-types";
+import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST,RECEIVE_MSG_LIST,RECEIVE_MSG,MSG_READ } from "./action-types";
 // 引入socket.io实现聊天功能
 import io from 'socket.io-client'
 /*
@@ -14,7 +14,7 @@ function initIO(dispatch,userid) {
         io.socket.on('receiveMsg', function (chatMsg) {
             // 只有当chatMsg与当前用户相关的消息，才去分发同步action保存消息
             if (userid === chatMsg.from || userid === chatMsg.to) {
-                dispatch(receiveMsg(chatMsg))
+                dispatch(receiveMsg({chatMsg,userid}))
                 
             }
         })
@@ -36,7 +36,7 @@ async function getMsgList(dispatch,userid) {
     if (result.code === 0) {
         const {users,chatMsgs} = result.data
         // 分发同步action
-       dispatch(receiveMsgList({users,chatMsgs}))
+       dispatch(receiveMsgList({users,chatMsgs,userid}))
     } else {
         
     }
@@ -68,15 +68,31 @@ export const receiveUserList = (users) => ({
     data: users
 })
 // 接收消息列表的同步action
-export const receiveMsgList = ({users,chatMsgs}) => ({
+export const receiveMsgList = ({users,chatMsgs,userid}) => ({
     type: RECEIVE_MSG_LIST,
-    data: {users,chatMsgs}
+    data: {users,chatMsgs,userid}
 })
 // 接收一个消息的同步action
-export const receiveMsg = (chatMsgs) => ({
+export const receiveMsg = ({chatMsg,userid}) => ({
     type: RECEIVE_MSG,
-    data: chatMsgs
+    data: {chatMsg,userid}
 })
+// 读取某个聊天消息的同步action
+const msgRead = ({count,from,to}) => ({
+    type: MSG_READ,
+    data: {count,from,to}
+})
+// 读取消息的异步action
+export const readMsg = (from,to) => {
+    return async dispatch => {
+        const response = await reqReadMsg(from)
+        const result = response.data
+        if (result.code === 0) {
+            const count = result.data
+            dispatch(msgRead({count,from,to}))
+        }
+    }
+}
 // 包含n个action creater，异步action，同步action
 export const register = ({ username, password, confirmPassword, type }) => {
     if (!username || !password || !type) {
