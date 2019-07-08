@@ -105,7 +105,7 @@
 # day03
 ## 1. 实现user信息完善功能
     1). 用户信息完善界面路由组件: 
-        组件: dashen-info/laoban-info/header-selector
+        组件: dashen-info/boss-info/header-selector
         界面: Navbar/List/Grid/InputItem/Button/TextareaItem
         收集用户输入数据: onChange监听/state 
         注册2级路由: 在main路由组件
